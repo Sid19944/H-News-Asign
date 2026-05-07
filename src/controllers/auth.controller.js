@@ -5,7 +5,7 @@ import { UserModel } from "../models/user.model.js";
 import bcrypt from "bcrypt";
 
 const generateToken = async (id) => {
-  jwt.sign({ _id: id }, process.env.JWT_SECRET, {
+  return jwt.sign({ _id: id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRY,
   });
 };
@@ -16,12 +16,12 @@ const register = wrapAsync(async (req, res, next) => {
     return next(new ErrorHandler("Please enter all field", 400));
   }
 
-  if (password === confirmPassword) {
+  if (password !== confirmPassword) {
     return next(new ErrorHandler("Password dos't match", 400));
   }
 
   const userExist = await UserModel.findOne({ $or: [{ email }, { username }] });
-  if (!userExist) {
+  if (userExist) {
     return next(new ErrorHandler("User already exist with us", 400));
   }
 
@@ -47,16 +47,17 @@ const login = wrapAsync(async (req, res, next) => {
   }
   const user = await UserModel.findOne({ email });
   if (!user) {
-    return next(new ErrorHandler("User is not registered with us!", 400));
+    return next(new ErrorHandler("Email is not registered with us!", 400));
   }
   const checkPassword = await bcrypt.compare(password, user.password);
   if (!checkPassword) {
     return next(new ErrorHandler("Wrong password", 400));
   }
 
+  const token = await generateToken(user._id);
   return res
     .status(200)
-    .cookie("token", generateToken(user._id), {
+    .cookie("token", token, {
       httpOnly: true,
       secure: true,
       expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
@@ -69,9 +70,14 @@ const login = wrapAsync(async (req, res, next) => {
 });
 
 const logout = wrapAsync(async (req, res, next) => {
-  return res.status(200).clearCookie("token", {
-    httpOnly: true,
-    secure: true,
-    sameSite: "none",
-  });
+  return res
+    .status(200)
+    .clearCookie("token", {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+    })
+    .json({ success: true });
 });
+
+export { register, login, logout };

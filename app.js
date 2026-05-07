@@ -16,8 +16,12 @@ app.use(
   }),
 );
 
+import authRoute from "./src/routes/auth.route.js";
+app.use("/api/auth/user", authRoute);
 
-import { errorMiddleware } from "./src/middleware/error.handler";
+
+
+import { errorMiddleware } from "./src/middleware/error.handler.js";
 app.use(errorMiddleware);
 
 export default app;
