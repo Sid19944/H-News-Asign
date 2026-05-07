@@ -4,8 +4,8 @@ import { protect } from "../middleware/auth.middleware.js";
 
 const router = Router();
 
-router.route("/register").post(register);
-router.route("/login").post(login);
-router.route("/logout").post(protect, logout);
+router.post("/register", register)
+router.post("/login", login)
+router.post("/logout", protect, logout)
 
 export default router;

@@ -17,9 +17,10 @@ app.use(
 );
 
 import authRoute from "./src/routes/auth.route.js";
-app.use("/api/auth/user", authRoute);
+app.use("/api/auth", authRoute);
 
-
+import storyRoute from "./src/routes/story.route.js";
+app.use("/api/stories", storyRoute);
 
 import { errorMiddleware } from "./src/middleware/error.handler.js";
 app.use(errorMiddleware);
