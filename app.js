@@ -16,4 +16,8 @@ app.use(
   }),
 );
 
+
+import { errorMiddleware } from "./src/middleware/error.handler";
+app.use(errorMiddleware);
+
 export default app;
