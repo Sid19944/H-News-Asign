@@ -35,9 +35,9 @@ function StoryCard({ story, isBookmarked, toggleBookmarked }) {
       <Link to={story.url}>{story.title}</Link>
 
       <h1 className="text-xs text-gray-400">
-        {new Date(story.postedAt.split(" ")[0]).toLocaleDateString()}
+        {new Date(story?.postedAt?.split(" ")[0]).toLocaleDateString()}
         {", "}
-        {new Date(story.postedAt.split(" ")[0]).toLocaleTimeString()}
+        {new Date(story?.postedAt?.split(" ")[0]).toLocaleTimeString()}
       </h1>
     </motion.div>
   );

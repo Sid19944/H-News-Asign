@@ -56,41 +56,59 @@ function Home() {
 
   return (
     <div className="flex flex-col items-center h-full ">
-      <div className="flex flex-col w-[60%] px-3 gap-3 p-3 h-full">
-        <div className="flex flex-col gap-3 overflow-auto min-h-0">
+      <div className="flex flex-col sm:w-[60%] px-3 gap-3 p-3 h-full">
+        <div className="flex flex-col gap-3 overflow-auto min-h-0 flex-1">
           {stories.map((story) => (
-            <Suspense fallback={<p>Loading...</p>}>
+            <Suspense fallback={<p>Loading...</p>} key={story._id}>
               <StoryCard
-                key={story.sId}
                 story={story}
+                key={story._id}
                 isBookmarked={bookmarks.some((bk) => bk._id == story._id)}
                 toggleBookmarked={toggleBookmarked}
               />
             </Suspense>
           ))}
         </div>
-        <div id="pagination" className="flex w-full justify-center gap-2">
+
+        <div id="pagination" className="px-2 flex w-full justify-center gap-2">
           <Button
             disabled={page === 1}
             onClick={() => setPage(page - 1)}
-            className="cursor-pointer border p-1 px-2 rounded-lg"
+            className="cursor-pointer border p-1 px-2 rounded-lg "
           >
             ← Prev
           </Button>
-          {Array.from({ length: pages }, (_, i) => (
+          <div className=" flex ">
             <Button
               variant="outline"
-              key={i}
-              onClick={() => setPage(i + 1)}
-              className={`cursor-pointer border w-10 rounded-lg flex justify-center items-center ${page == i + 1 && "bg-blue-300 text-blue-800"}`}
+              onClick={() => setPage(1)}
+              className={`cursor-pointer border w-10 rounded-lg flex justify-center items-center ${page == 1 && "bg-blue-300 text-blue-800"}`}
             >
-              {i + 1}
+              1
             </Button>
-          ))}
+
+            {page !== 1 && page !== pages && (
+              <Button
+                variant="outline"
+                onClick={() => setPage(page)}
+                className={`cursor-pointer border w-10 rounded-lg flex justify-center items-center ${page == page && "bg-blue-300 text-blue-800"}`}
+              >
+                {page}
+              </Button>
+            )}
+
+            <Button
+              variant="outline"
+              onClick={() => setPage(pages)}
+              className={`cursor-pointer border w-10 rounded-lg flex justify-center items-center ${page == pages && "bg-blue-300 text-blue-800"}`}
+            >
+              {pages}
+            </Button>
+          </div>
           <Button
             disabled={page === pages}
             onClick={() => setPage(page + 1)}
-            className="cursor-pointer border p-1 px-2 rounded-lg"
+            className="cursor-pointer border p-1 px-2 rounded-lg "
           >
             Next →
           </Button>

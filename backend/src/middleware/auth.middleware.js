@@ -6,7 +6,7 @@ export const protect = async (req, res, next) => {
   let token =
     req?.cookies?.token || req?.header("Authorization")?.replace("Bearer", "");
   if (!token) {
-    return next(new ErrorHandler("Not authorized, no token", 401));
+    return next(new ErrorHandler("Not authorized", 401));
   }
   try {
     const decodeToken = jwt.verify(token, process.env.JWT_SECRET);

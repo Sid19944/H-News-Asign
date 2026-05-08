@@ -12,12 +12,12 @@ createRoot(document.getElementById("root")).render(
       backgroundSize: "40px 40px",
     }}
   >
-    <AuthProvider>
-      <BrowserRouter>
+    <BrowserRouter>
+      <AuthProvider>
         <Routes>
           <Route path="/*" element={<App />} />
         </Routes>
-      </BrowserRouter>
-    </AuthProvider>
+      </AuthProvider>
+    </BrowserRouter>
   </div>,
 );

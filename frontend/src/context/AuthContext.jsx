@@ -1,9 +1,11 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { authApi } from "../apiHandler/axios.api.js";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router";
 
 const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
+  const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -28,6 +30,8 @@ export const AuthProvider = ({ children }) => {
       .post("/login", data)
       .then((res) => {
         toast.success(res.data.message);
+        getCurrUser()
+        navigate("/");
       })
       .catch((err) => {
         toast.error(err.response.data.message || err.message);
@@ -43,6 +47,8 @@ export const AuthProvider = ({ children }) => {
       .post("/logout")
       .then((res) => {
         toast.success(res.data.message);
+        setUser(null);
+        navigate("/");
       })
       .catch((err) => {
         toast.error(err.response.data.message || err.message);

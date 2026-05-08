@@ -11,13 +11,16 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(
   cors({
-    origin: ["*"],
+    origin: ["http://localhost:5173"],
     credentials: true,
   }),
 );
 
 import authRoute from "./src/routes/auth.route.js";
 app.use("/api/auth", authRoute);
+
+import scrapeRoute from "./src/routes/scrape.route.js";
+app.use("/api/scrape", scrapeRoute);
 
 import storyRoute from "./src/routes/story.route.js";
 app.use("/api/stories", storyRoute);

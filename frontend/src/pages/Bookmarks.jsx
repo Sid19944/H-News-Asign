@@ -2,7 +2,6 @@ import { useAuth } from "@/context/AuthContext";
 import React, { useEffect, useState } from "react";
 import { lazy, Suspense } from "react";
 const StoryCard = lazy(() => import("@/components/StoryCard"));
-import { Button } from "@/components/ui/button";
 import { storyApi } from "@/apiHandler/axios.api";
 
 function Bookmarks() {
@@ -37,7 +36,7 @@ function Bookmarks() {
 
   return (
     <div className="flex flex-col items-center h-full">
-        <div className="flex flex-col w-[60%] px-3 gap-3 p-3 overflow-auto">
+      <div className="flex flex-col sm:w-[60%] px-3 gap-3 p-3 overflow-auto">
         <div className="flex flex-col gap-3">
           <Suspense fallback={<p>Loading...</p>}>
             {bookmarks?.map((story) => (

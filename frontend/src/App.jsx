@@ -7,11 +7,10 @@ const Register = lazy(() => import("./components/auth/Register"));
 const Login = lazy(() => import("./components/auth/Login"));
 const Bookmarks = lazy(() => import("./pages/Bookmarks"));
 const Navbar = lazy(() => import("./components/Navbar"));
-const Profile = lazy(() => import("./pages/Profile"));
 import { useEffect } from "react";
 
 function App() {
-  const { getCurrUser } = useAuth();
+  const { getCurrUser, user } = useAuth();
   useEffect(() => {
     getCurrUser();
   }, []);
@@ -43,14 +42,6 @@ function App() {
             element={
               <Suspense fallback={<p>Loading...</p>}>
                 <Login />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/profile"
-            element={
-              <Suspense fallback={<p>Loading...</p>}>
-                <Profile />
               </Suspense>
             }
           />

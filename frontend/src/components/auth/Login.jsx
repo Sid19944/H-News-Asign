@@ -104,7 +104,7 @@ function login() {
                 LOGIN
               </Button>
               <p className="text-sm text-end px-2">
-                <Link to="/login">
+                <Link to="/register">
                   Don't have an account?{" "}
                   <span className="text-blue-700 underline"> Sign Up </span>
                 </Link>

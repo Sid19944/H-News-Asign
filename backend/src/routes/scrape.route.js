@@ -3,6 +3,6 @@ import { triggerScrape } from "../controllers/scrape.controller.js";
 import { getStories } from "../controllers/story.controller.js";
 const router = Router();
 
-router.post("/", triggerScrape);
+router.get("/", triggerScrape);
 
 export default router;

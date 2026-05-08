@@ -2,6 +2,7 @@ import axios from "axios";
 import { load } from "cheerio";
 import { StoryModel } from "../models/story.model.js";
 import { wrapAsync } from "../middleware/wrapAsync.js";
+import ErrorHandler from "../middleware/error.handler.js";
 
 const scrapreHackerNews = async () => {
   const { data } = await axios.get("https://news.ycombinator.com");
@@ -26,7 +27,15 @@ const scrapreHackerNews = async () => {
         subTextRow.find(".age a").text().trim() ||
         "";
 
-      if (title) stories.push({ sId, title, url, points, author, postedAt });
+      if (title)
+        stories.push({
+          sId,
+          title,
+          url,
+          points,
+          author,
+          postedAt: postedAt.split(" ")[0],
+        });
     });
 
   for (const story of stories) {
@@ -44,10 +53,12 @@ const triggerScrape = wrapAsync(async (req, res, next) => {
 
     return res.status(200).json({
       success: true,
-      message: `Scraped ${stories.length} stories`,
+      message: `Latest Story loded`,
       stories,
     });
-  } catch (err) {}
+  } catch (err) {
+    return next(new ErrorHandler("Faild to scrape the stories", 500));
+  }
 });
 
 export { triggerScrape, scrapreHackerNews };

@@ -2,6 +2,7 @@ import ErrorHandler from "../middleware/error.handler.js";
 import { wrapAsync } from "../middleware/wrapAsync.js";
 import { StoryModel } from "../models/story.model.js";
 import { UserModel } from "../models/user.model.js";
+import redis from "../utils/redis.js";
 
 const getStories = wrapAsync(async (req, res, next) => {
   try {
@@ -45,6 +46,8 @@ const toggleBookmark = wrapAsync(async (req, res, next) => {
     user.bookmarks.push(storyId);
   }
   await user.save();
+
+  await redis.del("bookmarks")
   return res.status(200).json({
     success: true,
     bookmarked: !isBookmarked,
@@ -53,8 +56,18 @@ const toggleBookmark = wrapAsync(async (req, res, next) => {
 });
 
 const getBookmarks = wrapAsync(async (req, res, next) => {
-  // console.log(req.user)
+  const cached = await redis.get("bookmarks");
+  if (cached) {
+    return res.status(200).json({
+      success: true,
+      bookmarks: JSON.parse(cached),
+    });
+  }
   const user = await UserModel.findById(req.user._id).populate("bookmarks");
+
+  await redis.set("bookmarks", JSON.stringify(user.bookmarks), {
+    EX: 24 * 60 * 60 * 1000,
+  });
 
   return res.status(200).json({
     success: true,

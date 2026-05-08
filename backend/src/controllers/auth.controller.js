@@ -69,6 +69,13 @@ const login = wrapAsync(async (req, res, next) => {
     });
 });
 
+const getCurrUser = wrapAsync(async (req, res, next) => {
+  return res.status(200).json({
+    success: true,
+    user: req.user,
+  });
+});
+
 const logout = wrapAsync(async (req, res, next) => {
   return res
     .status(200)
@@ -77,7 +84,7 @@ const logout = wrapAsync(async (req, res, next) => {
       secure: true,
       sameSite: "none",
     })
-    .json({ success: true });
+    .json({ success: true, message: "User Logout successfully" });
 });
 
-export { register, login, logout };
+export { register, login, logout, getCurrUser };
