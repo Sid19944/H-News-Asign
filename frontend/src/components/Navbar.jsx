@@ -47,7 +47,11 @@ function Navbar() {
               StoryPulse
             </span>
           </>
-          <Button variant="outline" onClick={()=>triggerScrape()} className="absolute right-2 border p-1 px-2 border-black rounded-lg">
+          <Button
+            variant="outline"
+            onClick={() => triggerScrape()}
+            className="absolute right-2 border p-1 px-2 border-black rounded-lg"
+          >
             {scraping ? <Loader2 className="animate-spin" /> : <RefreshCcw />}
           </Button>
         </div>
@@ -87,7 +91,7 @@ function Navbar() {
               whileInView={{ y: 0, opacity: 1 }}
               exit={{ y: -100, opacity: 0 }}
               transition={{ duration: 0.5, ease: easeInOut }}
-              className="flex sm:hidden absolute top-11 left-0 text-xl p-3 gap-4 border w-full bg-gray-400 flex-col"
+              className="flex sm:hidden absolute top-11 left-0 text-xl p-3 gap-4 border w-full bg-gray-400 flex-col z-10"
             >
               <Link
                 to="/"
