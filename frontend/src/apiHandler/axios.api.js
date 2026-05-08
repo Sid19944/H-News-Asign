@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = "http://localhost:3000/api"
+const url = "https://stroypulse.onrender.com/api"
 
 const authApi = axios.create({
   baseURL: `${url}/auth`,

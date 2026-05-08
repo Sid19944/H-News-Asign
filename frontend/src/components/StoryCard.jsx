@@ -9,7 +9,7 @@ function StoryCard({ story, isBookmarked, toggleBookmarked }) {
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.7, ease: easeInOut }}
-      className="border p-3 rounded-sm bg-white"
+      className="border p-3 rounded-sm bg-white mb-3"
     >
       <div className="flex text-sm items-center gap-2 justify-between">
         <div className="flex">
