@@ -1,32 +1,40 @@
 import React from "react";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { Controller, useForm } from "react-hook-form";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { zodResolver } from "@hookform/resolvers/zod";
+
 import {
   Field,
-  FieldDescription,
   FieldError,
   FieldGroup,
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText,
-  InputGroupTextarea,
-} from "@/components/ui/input-group";
-import { BellElectric, MessageCircle, TruckElectric } from "lucide-react";
 
-function Auth() {
+import { BellElectric, MessageCircle } from "lucide-react";
+import { Link } from "react-router";
+import z from "zod";
+import { useAuth } from "@/context/AuthContext";
+
+const registerValidate = z.object({
+  username: z.string().min(4, { message: "usernmae at lest 4 charter" }),
+  email: z.string().email({ message: "Enter Valid Email ID" }),
+  password: z
+    .string()
+    .min(8, { message: "minimum 8" })
+    .regex(/[A-Z]/, { message: "At lest one Upper Case" })
+    .regex(/[a-z]/, { message: "At lest one lower case" })
+    .regex(/[0-9]/, { message: "At lest one digit" })
+    .regex(/[!@#$%&]/, { message: "At lest one special char" }),
+  confirmPassword: z.string().min(1, { message: "Enter Confirm Password" }),
+});
+
+function Register() {
+  const { signUp } = useAuth();
+
   const form = useForm({
+    resolver: zodResolver(registerValidate),
+    mode: "onChange",
     defaultValues: {
       username: "",
       email: "",
@@ -35,7 +43,14 @@ function Auth() {
     },
   });
 
-  const onSubmit = () => {};
+  const { watch } = form;
+  const password = watch("password");
+  const confirmPassword = watch("confirmPassword");
+
+  const onSubmit = (data) => {
+    signUp(data);
+    form.reset();
+  };
 
   return (
     <div className="flex h-full">
@@ -126,20 +141,35 @@ function Auth() {
                     placeholder="Enter Confirm Password"
                     autoComplete="off"
                   />
+                  {confirmPassword !== "" && password !== confirmPassword && (
+                    <FieldError>Password is not match</FieldError>
+                  )}
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
                   )}
                 </Field>
               )}
             />
-            <Button>SIGN UP</Button>
+            <div className="w-full flex flex-col gap-1">
+              <Button className="w-full cursor-pointer" type="submit">
+                SIGN UP
+              </Button>
+              <p className="text-sm text-end px-2">
+                <Link to="/login">
+                  Already have an account?{" "}
+                  <span className="text-blue-700 underline"> Log In </span>
+                </Link>
+              </p>
+            </div>
           </FieldGroup>
         </form>
       </div>
 
       <div className="hidden w-1/2 sm:flex h-full justify-center items-center">
-        <div className="w-[60%] h-7/10 flex flex-col 
-        justify-center gap-4">
+        <div
+          className="w-[60%] h-7/10 flex flex-col 
+        justify-center gap-4"
+        >
           <div className="flex flex-col border p-2 gap-2 bg-[#fdfbef] rounded-md">
             <h1 className="font-semibold">Stary ahead of the pulse.</h1>
             <p className="text-sm">
@@ -181,4 +211,4 @@ function Auth() {
   );
 }
 
-export default Auth;
+export default Register;

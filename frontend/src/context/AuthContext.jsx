@@ -4,11 +4,10 @@ import toast from "react-hot-toast";
 
 const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const signUp = async (data) => {
-    console.log(data)
     setIsLoading(true);
     authApi
       .post("/register", data)
@@ -58,10 +57,10 @@ export const AuthProvider = ({ children }) => {
     authApi
       .get("/get-user")
       .then((res) => {
-        toast.success(res.data.message);
+        setUser(res.data.user);
       })
       .catch((err) => {
-        toast.error(err.response.data.message || err.message);
+        console.error(err.response.data.message || err.message);
       })
       .finally(() => {
         setIsLoading(false);
@@ -69,7 +68,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ signUp, signIn, logOut, getCurrUser }}>
+    <AuthContext.Provider
+      value={{ signUp, signIn, logOut, getCurrUser, user, isLoading }}
+    >
       {children}
     </AuthContext.Provider>
   );
