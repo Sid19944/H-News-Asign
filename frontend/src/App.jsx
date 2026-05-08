@@ -8,6 +8,7 @@ const Login = lazy(() => import("./components/auth/Login"));
 const Bookmarks = lazy(() => import("./pages/Bookmarks"));
 const Navbar = lazy(() => import("./components/Navbar"));
 import { useEffect } from "react";
+import Footer from "./components/Footer";
 
 function App() {
   const { getCurrUser, user } = useAuth();
@@ -48,6 +49,7 @@ function App() {
           <Route path="*" element={<div>404</div>} />
         </Routes>
       </div>
+      <Footer/>
     </div>
   );
 }

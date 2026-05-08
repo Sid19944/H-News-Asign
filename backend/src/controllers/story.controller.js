@@ -47,7 +47,7 @@ const toggleBookmark = wrapAsync(async (req, res, next) => {
   }
   await user.save();
 
-  await redis.del("bookmarks")
+  await redis.del("bookmarks");
   return res.status(200).json({
     success: true,
     bookmarked: !isBookmarked,
