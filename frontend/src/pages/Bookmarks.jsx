@@ -3,9 +3,11 @@ import React, { useEffect, useState } from "react";
 import { lazy, Suspense } from "react";
 const StoryCard = lazy(() => import("@/components/StoryCard"));
 import { storyApi } from "@/apiHandler/axios.api";
+import { Skeleton } from "boneyard-js/react";
 
 function Bookmarks() {
   const [bookmarks, setBookmarks] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const { user } = useAuth();
 
   useEffect(() => {
@@ -13,6 +15,7 @@ function Bookmarks() {
   }, [user]);
 
   const fetchBookmarks = () => {
+    setIsLoading(true);
     storyApi
       .get(`/bookmarks`)
       .then((res) => {
@@ -20,8 +23,13 @@ function Bookmarks() {
       })
       .catch(() => {
         console.log("User not logged in");
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
+
+  console.log(isLoading)
 
   const toggleBookmarked = (id) => {
     storyApi
@@ -38,8 +46,8 @@ function Bookmarks() {
     <div className="flex flex-col items-center h-full">
       <div className="flex flex-col sm:w-[60%] px-3 gap-3 p-3 overflow-auto">
         <div className="flex flex-col gap-3">
-          <Suspense fallback={<p>Loading...</p>}>
-            {bookmarks?.map((story) => (
+          <Skeleton name="story-card" loading={isLoading}>
+            {bookmarks.map((story) => (
               <StoryCard
                 key={story.sId}
                 story={story}
@@ -47,7 +55,7 @@ function Bookmarks() {
                 toggleBookmarked={toggleBookmarked}
               />
             ))}
-          </Suspense>
+          </Skeleton>
         </div>
       </div>
     </div>

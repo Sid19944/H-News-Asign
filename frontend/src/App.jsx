@@ -1,3 +1,4 @@
+import './bones/registry'
 import { Routes, Route } from "react-router-dom";
 import { useAuth } from "./context/AuthContext";
 import { lazy, Suspense } from "react";

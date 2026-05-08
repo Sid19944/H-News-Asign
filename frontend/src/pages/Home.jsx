@@ -6,8 +6,10 @@ import { storyApi } from "@/apiHandler/axios.api";
 import toast from "react-hot-toast";
 import { Button } from "@/components/ui/button";
 const StoryCard = lazy(() => import("@/components/StoryCard"));
+import { Skeleton } from "boneyard-js/react";
 
 function Home() {
+  const [isLoading, setIsLoading] = useState(true);
   const [stories, setStories] = useState([]);
   const [bookmarks, setBookmarks] = useState([]);
   const [page, setPage] = useState(1);
@@ -19,6 +21,7 @@ function Home() {
   }, [page]);
 
   const fetchStories = () => {
+    setIsLoading(true);
     storyApi
       .get(`/?page=${page}&limit=10`)
       .then((res) => {
@@ -28,6 +31,9 @@ function Home() {
       })
       .catch((err) => {
         toast.error(err?.response?.data?.message || err.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -58,16 +64,16 @@ function Home() {
     <div className="flex flex-col items-center h-full ">
       <div className="flex flex-col sm:w-[60%] px-3 gap-3 p-3 h-full">
         <div className="flex flex-col gap-3 overflow-auto min-h-0 flex-1">
-          {stories.map((story) => (
-            <Suspense fallback={<p>Loading...</p>} key={story._id}>
+          <Skeleton name="story-card" loading={isLoading}>
+            {stories.map((story) => (
               <StoryCard
                 story={story}
                 key={story._id}
                 isBookmarked={bookmarks.some((bk) => bk._id == story._id)}
                 toggleBookmarked={toggleBookmarked}
               />
-            </Suspense>
-          ))}
+            ))}
+          </Skeleton>
         </div>
 
         <div id="pagination" className="px-2 flex w-full justify-center gap-2">
