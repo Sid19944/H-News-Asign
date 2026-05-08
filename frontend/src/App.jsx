@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import { useAuth } from "./context/AuthContext";
 import { lazy, Suspense } from "react";
 import { Toaster } from "react-hot-toast";
-const Home = lazy(() => import("./pages/home"));
+const Home = lazy(() => import("./pages/Home"));
 const Register = lazy(() => import("./components/auth/Register"));
 const Login = lazy(() => import("./components/auth/Login"));
 const Bookmarks = lazy(() => import("./pages/Bookmarks"));

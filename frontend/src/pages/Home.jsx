@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useAuth } from "../context/AuthContext";
-import Navbar from "@/components/Navbar";
-import { lazy, Suspense } from "react";
+import { lazy} from "react";
 import { storyApi } from "@/apiHandler/axios.api";
 import toast from "react-hot-toast";
 import { Button } from "@/components/ui/button";

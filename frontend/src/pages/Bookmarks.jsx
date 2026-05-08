@@ -1,6 +1,6 @@
 import { useAuth } from "@/context/AuthContext";
 import React, { useEffect, useState } from "react";
-import { lazy, Suspense } from "react";
+import { lazy } from "react";
 const StoryCard = lazy(() => import("@/components/StoryCard"));
 import { storyApi } from "@/apiHandler/axios.api";
 import { Skeleton } from "boneyard-js/react";
