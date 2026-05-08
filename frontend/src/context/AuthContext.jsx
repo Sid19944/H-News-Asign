@@ -1,0 +1,78 @@
+import { createContext, useContext, useState } from "react";
+import { authApi } from "../apiHandler/axios.api.js";
+import toast from "react-hot-toast";
+
+const AuthContext = createContext();
+export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+
+  const signUp = async (data) => {
+    console.log(data)
+    setIsLoading(true);
+    authApi
+      .post("/register", data)
+      .then((res) => {
+        toast.success(res.data.message);
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message || err.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+
+  const signIn = async (data) => {
+    setIsLoading(true);
+    authApi
+      .post("/login", data)
+      .then((res) => {
+        toast.success(res.data.message);
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message || err.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+
+  const logOut = async () => {
+    setIsLoading(true);
+    authApi
+      .post("/logout")
+      .then((res) => {
+        toast.success(res.data.message);
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message || err.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+
+  const getCurrUser = async () => {
+    setIsLoading(true);
+    authApi
+      .get("/get-user")
+      .then((res) => {
+        toast.success(res.data.message);
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message || err.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+
+  return (
+    <AuthContext.Provider value={{ signUp, signIn, logOut, getCurrUser }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+export const useAuth = () => useContext(AuthContext);
