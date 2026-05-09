@@ -13,19 +13,19 @@ A full-stack web application built with MongoDB, Express, React, and Node.js tha
 
 # Routes
 - Auth :
-    /api/auth/register
-    /api/auth/login
-    /api/auth/get-user (#Protected)
-    /api/auth/logout (#Protected)
+    - /api/auth/register
+    - /api/auth/login
+    - /api/auth/get-user (#Protected)
+    - /api/auth/logout (#Protected)
 
 - Scrape :
-    /api/scrape (get the top 10 story)
+    - /api/scrape (get the top 10 story)
 
 - Story :
-    /api/stories?page=1&limit=10 (get 10 stories)
-    /api/stories/bookmarks  (#Protected)
-    /api/stories/:id
-    /api/stories/:id/bookmarks  (#Protected, Toggle bookmark)
+    - /api/stories?page=1&limit=10 (get 10 stories)
+    - /api/stories/bookmarks  (#Protected)
+    - /api/stories/:id
+    - /api/stories/:id/bookmarks  (#Protected, Toggle bookmark)
 
 
 
