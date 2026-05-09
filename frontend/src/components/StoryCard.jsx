@@ -14,17 +14,17 @@ function StoryCard({ story, isBookmarked, toggleBookmarked }) {
       <div className="flex text-sm items-center gap-2 justify-between">
         <div className="flex">
           <span
-            className={`flex items-center rounded-sm px-1 text-xs ${story.points >= 1000 ? "bg-[#FFDBCD] text-red-700" : "bg-[#FFDDB8] text-[#6B4303]"}`}
+            className={`flex items-center rounded-sm px-1 text-xs ${story?.points >= 1000 ? "bg-[#FFDBCD] text-red-700" : "bg-[#FFDDB8] text-[#6B4303]"}`}
           >
-            {story.points >= 1000 && <Zap style={{ height: "10px" }} />}
-            {story.points}
+            {story?.points >= 1000 && <Zap style={{ height: "10px" }} />}
+            {story?.points}
           </span>
           <span className="flex items-center text-gray-400">
             <User style={{ height: "12px" }} />
-            {story.author}
+            {story?.author}
           </span>
         </div>
-        <span onClick={() => toggleBookmarked(story._id)} className="cursor-pointer">
+        <span onClick={() => toggleBookmarked(story?._id)} className="cursor-pointer">
           {isBookmarked ? (
             <BookmarkCheck className="text-blue-800" />
           ) : (
@@ -32,7 +32,7 @@ function StoryCard({ story, isBookmarked, toggleBookmarked }) {
           )}
         </span>
       </div>
-      <Link to={story.url}>{story.title}</Link>
+      <Link to={story?.url}>{story?.title}</Link>
 
       <h1 className="text-xs text-gray-400">
         {new Date(story?.postedAt?.split(" ")[0]).toLocaleDateString()}

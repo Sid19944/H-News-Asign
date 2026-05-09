@@ -1,0 +1,67 @@
+export const skeletonData = [
+  {
+    author: "haunter",
+    createdAt: "2026-05-07T08:22:45.035Z",
+    points: 1451,
+    postedAt: "2026-05-06T15:44:13 1778082253",
+    sId: "48037555",
+    title:
+      "Valve releases Steam Controller CAD files under Creative Commons license",
+    updatedAt: "2026-05-07T10:47:55.534Z",
+    url: "https://www.digitalfoundry.net/news/2026/05/valve-releases-steam-controller-cad-files-under-creative-commons-license",
+    __v: 0,
+    _id: "69fc4bcbc2a894c0ff3ffa13",
+  },
+  {
+    author: "haunter",
+    createdAt: "2026-05-07T08:22:45.035Z",
+    points: 1451,
+    postedAt: "2026-05-06T15:44:13 1778082253",
+    sId: "48037555",
+    title:
+      "Valve releases Steam Controller CAD files under Creative Commons license",
+    updatedAt: "2026-05-07T10:47:55.534Z",
+    url: "https://www.digitalfoundry.net/news/2026/05/valve-releases-steam-controller-cad-files-under-creative-commons-license",
+    __v: 0,
+    _id: "69fc4bcbc2a894c0ff3ffa13",
+  },
+  {
+    author: "haunter",
+    createdAt: "2026-05-07T08:22:45.035Z",
+    points: 1451,
+    postedAt: "2026-05-06T15:44:13 1778082253",
+    sId: "48037555",
+    title:
+      "Valve releases Steam Controller CAD files under Creative Commons license",
+    updatedAt: "2026-05-07T10:47:55.534Z",
+    url: "https://www.digitalfoundry.net/news/2026/05/valve-releases-steam-controller-cad-files-under-creative-commons-license",
+    __v: 0,
+    _id: "69fc4bcbc2a894c0ff3ffa13",
+  },
+  {
+    author: "haunter",
+    createdAt: "2026-05-07T08:22:45.035Z",
+    points: 1451,
+    postedAt: "2026-05-06T15:44:13 1778082253",
+    sId: "48037555",
+    title:
+      "Valve releases Steam Controller CAD files under Creative Commons license",
+    updatedAt: "2026-05-07T10:47:55.534Z",
+    url: "https://www.digitalfoundry.net/news/2026/05/valve-releases-steam-controller-cad-files-under-creative-commons-license",
+    __v: 0,
+    _id: "69fc4bcbc2a894c0ff3ffa13",
+  },
+  {
+    author: "haunter",
+    createdAt: "2026-05-07T08:22:45.035Z",
+    points: 1451,
+    postedAt: "2026-05-06T15:44:13 1778082253",
+    sId: "48037555",
+    title:
+      "Valve releases Steam Controller CAD files under Creative Commons license",
+    updatedAt: "2026-05-07T10:47:55.534Z",
+    url: "https://www.digitalfoundry.net/news/2026/05/valve-releases-steam-controller-cad-files-under-creative-commons-license",
+    __v: 0,
+    _id: "69fc4bcbc2a894c0ff3ffa13",
+  },
+];

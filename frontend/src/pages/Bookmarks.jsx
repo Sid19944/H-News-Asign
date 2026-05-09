@@ -4,6 +4,7 @@ import { lazy } from "react";
 const StoryCard = lazy(() => import("@/components/StoryCard"));
 import { storyApi } from "@/apiHandler/axios.api";
 import { Skeleton } from "boneyard-js/react";
+import { skeletonData } from "@/lib/skeleton.data";
 
 function Bookmarks() {
   const [bookmarks, setBookmarks] = useState([]);
@@ -29,8 +30,6 @@ function Bookmarks() {
       });
   };
 
-  console.log(isLoading)
-
   const toggleBookmarked = (id) => {
     storyApi
       .post(`/${id}/bookmark`)
@@ -46,16 +45,27 @@ function Bookmarks() {
     <div className="flex flex-col items-center h-full">
       <div className="flex flex-col sm:w-[60%] px-3 gap-3 p-3 overflow-auto">
         <div className="flex flex-col gap-3">
-          <Skeleton name="story-card" loading={isLoading}>
-            {bookmarks.map((story) => (
+          {isLoading ? (
+            <Skeleton name="story-card" loading={true}>
+              {skeletonData.map((story, idx) => (
+                <StoryCard
+                  story={story}
+                  key={idx}
+                  isBookmarked={bookmarks.some((bk) => bk._id == story._id)}
+                  toggleBookmarked={toggleBookmarked}
+                />
+              ))}
+            </Skeleton>
+          ) : (
+            bookmarks.map((story) => (
               <StoryCard
-                key={story.sId}
                 story={story}
-                isBookmarked={true}
+                key={story._id}
+                isBookmarked={bookmarks.some((bk) => bk._id == story._id)}
                 toggleBookmarked={toggleBookmarked}
               />
-            ))}
-          </Skeleton>
+            ))
+          )}
         </div>
       </div>
     </div>

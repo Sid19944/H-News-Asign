@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { lazy} from "react";
+import { lazy } from "react";
 import { storyApi } from "@/apiHandler/axios.api";
 import toast from "react-hot-toast";
 import { Button } from "@/components/ui/button";
 const StoryCard = lazy(() => import("@/components/StoryCard"));
 import { Skeleton } from "boneyard-js/react";
+import { skeletonData } from "@/lib/skeleton.data";
+
 
 function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -58,20 +60,32 @@ function Home() {
       });
   };
 
+
   return (
     <div className="flex flex-col items-center h-full ">
       <div className="flex flex-col sm:w-[60%] px-3 gap-3 p-3 h-full">
         <div className="flex flex-col gap-3 overflow-auto min-h-0 flex-1">
-          <Skeleton name="story-card" loading={isLoading}>
-            {stories.map((story) => (
+          {isLoading ? (
+            <Skeleton name="story-card" loading={true}>
+              {skeletonData.map((story,idx) => (
+                <StoryCard
+                  story={story}
+                  key={idx}
+                  isBookmarked={bookmarks.some((bk) => bk._id == story._id)}
+                  toggleBookmarked={toggleBookmarked}
+                />
+              ))}
+            </Skeleton>
+          ) : (
+            stories.map((story) => (
               <StoryCard
                 story={story}
                 key={story._id}
                 isBookmarked={bookmarks.some((bk) => bk._id == story._id)}
                 toggleBookmarked={toggleBookmarked}
               />
-            ))}
-          </Skeleton>
+            ))
+          )}
         </div>
 
         <div id="pagination" className="px-2 flex w-full justify-center gap-2">
